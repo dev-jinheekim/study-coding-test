@@ -23,15 +23,15 @@
     <script>
         function findMinimumChanges() {
             let change = parseInt(document.getElementById('change').value);
-            let coins = [500, 100, 50, 10];
-            let result = 0;
+            let coinTypes = [500, 100, 50, 10];
+            let count = 0;
 
-            coins.forEach((coin) => {
-                result += Math.floor(change / coin);
+            coinTypes.forEach((coin) => {
+                count += Math.floor(change / coin);
                 change = change % coin;
             });
 
-            alert(`거슬러 줘야 할 동전의 갯수 : ${result}개`);
+            alert(`거슬러 줘야 할 동전의 갯수 : ${count}개`);
         }
     </script>
 
