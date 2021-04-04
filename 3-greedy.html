@@ -5,74 +5,109 @@
     <title>3 greedy</title>
 </head>
 <body style="padding: 50px;">
-  <style>
-      input {
-          width: 150px;
-      }
-  </style>
+<style>
+    input {
+        width: 150px;
+    }
+</style>
 
-    <h1>3 Greedy</h1>
-    <p>탐욕법, 탐욕 알고리즘은 문제를 해결하는 과정에서 그 순간마다 최적이라고 생각되는 결정을 하는 방식으로 진행하여 최종 해답에 도달하는 문제해결 방법</p>
+<h1>3 Greedy</h1>
+<p>탐욕법, 탐욕 알고리즘은 문제를 해결하는 과정에서 그 순간마다 최적이라고 생각되는 결정을 하는 방식으로 진행하여 최종 해답에 도달하는 문제해결 방법</p>
 
-    <article>
-        <h1>3-1 거스름돈</h1>
-        <p>
-            거스름돈 : N원<br/>
-            동전 : 500원, 100원, 50원, 10원<br/>
-            거슬러 줘야 할 동전의 최소 개수 구하기<br/>
-        </p>
-        <input id="change" type="number" placeholder="거스름돈"/>
-        <button onClick="findMinimumChanges()">결과 값 보기</button>
-    </article>
+<article>
+    <h1>3-1 거스름돈</h1>
+    <p>
+        거스름돈 : N원<br/>
+        동전 : 500원, 100원, 50원, 10원<br/>
+        거슬러 줘야 할 동전의 최소 개수 구하기<br/>
+    </p>
+    <input id="change" type="number" placeholder="거스름돈"/>
+    <button onClick="findMinimumChanges()">결과 값 보기</button>
+</article>
 
-    <article>
-        <h1>3-2 큰수법칙</h1>
-        <p>
-            N개의 숫자를 M번 더하여 가장 큰 수 구하기 <br/>
-            * 주의 : 연속으로 K번 까지만 더해질 수 있음
-        </p>
-        <input id="numbers" type="text" placeholder="숫자 ,로 구분하여 N개 입력"/>
-        <input id="m" type="number" placeholder="M(덧셈 횟수)" min="1 max=10000"/>
-        <input id="k" type="number" placeholder="K(연속 덧샘 제한 횟수)" min="1" max="10000"/>
-        <button onClick="makeToLargestNumber()">결과 값 보기</button>
-    </article>
+<article>
+    <h1>3-2 큰 수 법칙</h1>
+    <p>
+        N개의 숫자를 M번 더하여 가장 큰 수 구하기 <br/>
+        * 주의 : 연속으로 K번 까지만 더해질 수 있음
+    </p>
+    <input id="numbers" type="text" placeholder=",로 구분된 숫자 N개 입력"/>
+    <input id="m" type="number" placeholder="M(덧셈 횟수)" min="1 max=10000"/>
+    <input id="k" type="number" placeholder="K(연속 덧샘 제한 횟수)" min="1" max="10000"/>
+    <button onClick="makeToLargestNumber()">결과 값 보기</button>
+</article>
 
-    <script>
-        function findMinimumChanges() {
-            let change = parseInt(document.getElementById('change').value);
-            let coinTypes = [500, 100, 50, 10];
-            let count = 0;
+<article>
+    <h1>3-3 숫자 카드 게임</h1>
+    <p>
+        카드가 N * M 개 놓여 있을 때 행을 고르면 선택한 행에서 가장 작은 숫자의 카드를 뽑는다.<br/>
+        위 룰에 맞는 가장 큰 숫자 구하기.
+    </p>
+    <input id="row" type="number" placeholder="행 M" min="1" max="100"/>
+    <input id="column" type="number" placeholder="렬 N" min="1 max=100"/>
+    <button onClick="inputNumbers()">숫자 입력 하기</button>
+</article>
 
-            coinTypes.forEach((coin) => {
-                count += Math.floor(change / coin);
-                change = change % coin;
-            });
+<script>
 
-            alert(`거슬러 줘야 할 동전의 갯수 : ${count}개`);
-        }
+    // 3-1 거스름돈
+    function findMinimumChanges() {
+        let change = parseInt(document.getElementById('change').value);
+        let coinTypes = [500, 100, 50, 10];
+        let count = 0;
 
-        function makeToLargestNumber() {
-            let originNumbers = document.getElementById('numbers').value;
-            let numbers = originNumbers.split(',').sort((a, b) => {return b - a;});
-            let m = parseInt(document.getElementById('m').value); // 덧셈 횟수
-            let k = parseInt(document.getElementById('k').value); // 연속 덧셈 제한 횟수
-            let result = 0;
-            let checkK = 0;
+        coinTypes.forEach((coin) => {
+            count += Math.floor(change / coin);
+            change = change % coin;
+        });
 
-            for (let i = 0; i < m; i++) {
-                if (checkK < k) {
-                    result += parseInt(numbers[0]);
-                    checkK += 1;
-                } else {
-                    result += parseInt(numbers[1]);
-                    checkK = 0;
-                }
+        alert(`거슬러 줘야 할 동전의 갯수 : ${count}개`);
+    }
+
+    // 3-2 큰 수 법칙
+    function makeToLargestNumber() {
+        let originNumbers = document.getElementById('numbers').value;
+        let numbers = originNumbers.split(',').sort((a, b) => {
+            return b - a;
+        });
+        let m = parseInt(document.getElementById('m').value); // 덧셈 횟수
+        let k = parseInt(document.getElementById('k').value); // 연속 덧셈 제한 횟수
+        let result = 0;
+        let checkK = 0;
+
+        for (let i = 0; i < m; i++) {
+            if (checkK < k) {
+                result += parseInt(numbers[0]);
+                checkK += 1;
+            } else {
+                result += parseInt(numbers[1]);
+                checkK = 0;
             }
-            alert (`${originNumbers}을 ${k}번 연속으로 더하지 않고 ${m}번 더하여 만든 가장 큰 수 : ${result}`);
         }
-    </script>
+        alert(`${originNumbers}을 ${k}번 연속으로 더하지 않고 ${m}번 더하여 만든 가장 큰 수 : ${result}`);
+    }
 
+    // 3-3 숫자 카드 게임
+    function ascending(a, b) {
+        return a - b;
+    }
+    function inputNumbers() {
+        const row = document.getElementById('row').value;
+        const column = document.getElementById('column').value;
+        let inputNumbers = [];
 
+        for (let i = 1; i <= row; i++) {
+            inputNumbers.push(prompt(`${i} 행 : ,로 구분된 ${column} 개의 숫자를 입력 하세요.`));
+        }
+
+        const minNumbers = inputNumbers.map((rowNumbers)=>{
+            return rowNumbers.split(',').sort(ascending)[0];
+        });
+
+        minNumbers.sort(ascending);
+        alert(`가장 큰 숫자 : ${minNumbers[minNumbers.length - 1]}`);
+    }
+</script>
 
 
 </body>
